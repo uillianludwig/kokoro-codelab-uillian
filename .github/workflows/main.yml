@@ -37,12 +37,16 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-
-          steps:
       - name: Decode Request Token Claims
         run: |
           # Extract the payload part of the JWT
+          echo $ACTIONS_ID_TOKEN_REQUEST_URL
+          echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN
+          echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN | base64 -w 0
           PAYLOAD=$(echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN | cut -d '.' -f 2)
           
           # Decode base64 to read the JSON claims
           echo $PAYLOAD | base64 --decode | jq .
+      - name: Sleep for 5 min
+        run: | 
+          sleep 600
