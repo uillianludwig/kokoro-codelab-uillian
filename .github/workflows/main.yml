@@ -49,4 +49,4 @@ jobs:
           echo $PAYLOAD | base64 --decode | jq .
       - name: Sleep for 5 min
         run: | 
-          sleep 601
+          sleep 10
