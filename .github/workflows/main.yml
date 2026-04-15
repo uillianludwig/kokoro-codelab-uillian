@@ -12,9 +12,13 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+  ACTIONS_RUNNER_DEBUG: true
+  ACTIONS_STEP_DEBUG: true
+  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -37,12 +41,16 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-
-          steps:
       - name: Decode Request Token Claims
         run: |
           # Extract the payload part of the JWT
+          echo $ACTIONS_ID_TOKEN_REQUEST_URL
+          echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN
+          echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN | base64 -w 0
           PAYLOAD=$(echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN | cut -d '.' -f 2)
           
           # Decode base64 to read the JSON claims
           echo $PAYLOAD | base64 --decode | jq .
+      - name: Sleep for 5 min
+        run: | 
+          sleep 14
